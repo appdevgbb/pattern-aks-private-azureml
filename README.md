@@ -1,0 +1,1 @@
+# pattern-aks-private-azureml
