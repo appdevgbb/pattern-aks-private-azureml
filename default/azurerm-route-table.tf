@@ -54,3 +54,19 @@ resource "azurerm_route" "defaultRtSpoke1" {
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = module.firewall.ip_address
 }
+
+resource "azurerm_route" "azureMLRt" {
+  name                   = "azureMLRoute"
+  resource_group_name    = azurerm_resource_group.default.name
+  route_table_name       = azurerm_route_table.aks-1-rt.name
+  address_prefix         = "AzureMachineLearning"
+  next_hop_type          = "Internet"
+}
+
+resource "azurerm_route" "azureBatchRt" {
+  name                   = "batchRoute"
+  resource_group_name    = azurerm_resource_group.default.name
+  route_table_name       = azurerm_route_table.aks-1-rt.name
+  address_prefix         = "BatchNodeManagement.westus3"
+  next_hop_type          = "Internet"
+}

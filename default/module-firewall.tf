@@ -216,3 +216,57 @@ resource "azurerm_firewall_application_rule_collection" "updates" {
     }
   }
 }
+
+resource "azurerm_firewall_application_rule_collection" "azureML" {
+  name                = "azureML${local.suffix}"
+  azure_firewall_name = module.firewall.name
+  resource_group_name = module.firewall.resource_group.name
+  priority            = 500
+  action              = "Allow"
+
+  rule {
+    name = "updateInfraRules"
+
+    source_addresses = concat([], azurerm_virtual_network.default.address_space)
+
+    target_fqdns = [
+      "graph.windows.net",
+      "*.anaconda.com",
+      "pypi.org",
+      "cloud.r-project.org",
+      "*pytorch.org",
+      "*.tensorflow.org",
+      "*vscode.dev",
+      "*vscode-unpkg.net",
+      "*vscode-cdn.net",
+      "*vscodeexperiments.azureedge.net",
+      "default.exp-tas.com",
+      "code.visualstudio.com",
+      "update.code.visualstudio.com",
+      "*.vo.msecnd.net",
+      "marketplace.visualstudio.com",
+      "vscode.blob.core.windows.net",
+      "*.gallerycdn.vsassets.io",
+      "raw.githubusercontent.com",
+      "dc.applicationinsights.azure.com",
+      "dc.applicationinsights.microsoft.com",
+      "dc.services.visualstudio.com",
+      "*.kusto.windows.net",
+      "*.table.core.windows.net",
+      "*.queue.core.windows.net",
+      "*.blob.core.windows.net",
+      "*.api.azureml.ms",
+      "*.experiments.azureml.net"
+    ]
+
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+
+    protocol {
+      port = "80"
+      type = "Http"
+    }
+  }
+}
