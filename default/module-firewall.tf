@@ -184,6 +184,77 @@ resource "azurerm_firewall_network_rule_collection" "ntp" {
   }
 }
 
+resource "azurerm_firewall_network_rule_collection" "aml" {
+  name                = "amlOutRules${local.suffix}"
+  azure_firewall_name = module.firewall.name
+  resource_group_name = module.firewall.resource_group.name
+  priority            = 160
+  action              = "Allow"
+
+
+  rule {
+    name = "allowAadOut"
+
+    source_addresses = ["*"]
+
+    destination_ports = [
+      "80",
+      "443"
+    ]
+
+    destination_addresses = [
+      "AzureActiveDirectory"
+    ]
+
+    protocols = [
+      "TCP",
+    ]
+  }
+  
+  rule {
+    name = "allowAmlOut"
+
+    source_addresses = ["*"]
+
+    destination_ports = [
+      "80",
+      "443",
+      "18881"
+    ]
+
+    destination_addresses = [
+      "AzureMachineLearning"
+    ]
+
+    protocols = [
+      "TCP",
+    ]
+  }
+
+  rule {
+    name = "allowVariousOut"
+
+    source_addresses = ["*"]
+
+    destination_ports = [
+      "443",
+    ]
+
+    destination_addresses = [
+      "AzureResourceManager",
+      "Storage.${var.location}",
+      "AzureFrontDoor.FrontEnd",
+      "AzureContainerRegistry.${var.location}",
+      "MicrosoftContainerRegistry.${var.location}",
+      "AzureKeyVault.${var.location}"
+    ]
+
+    protocols = [
+      "TCP",
+    ]
+  }
+}
+
 resource "azurerm_firewall_application_rule_collection" "updates" {
   name                = "ubuntuUpdateInfrastructure${local.suffix}"
   azure_firewall_name = module.firewall.name
@@ -225,9 +296,9 @@ resource "azurerm_firewall_application_rule_collection" "azureML" {
   action              = "Allow"
 
   rule {
-    name = "updateInfraRules"
+    name = "allowAmlOut"
 
-    source_addresses = concat([], azurerm_virtual_network.default.address_space)
+    source_addresses = ["*"]
 
     target_fqdns = [
       "graph.windows.net",
@@ -256,7 +327,15 @@ resource "azurerm_firewall_application_rule_collection" "azureML" {
       "*.queue.core.windows.net",
       "*.blob.core.windows.net",
       "*.api.azureml.ms",
-      "*.experiments.azureml.net"
+      "*.experiments.azureml.net",
+      "*.azurecr.io",
+      "*.workspace.${var.location}.api.azureml.ms",
+      "${var.location}.experiments.azureml.net",
+      "${var.location}.api.azureml.ms",
+      "pypi.org",
+      "archive.ubuntu.com",
+      "security.ubuntu.com",
+      "ppa.launchpad.net",
     ]
 
     protocol {

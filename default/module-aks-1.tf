@@ -1,8 +1,6 @@
 module "aks-1" {
   depends_on = [
     module.firewall,
-    # module.vpn,
-    module.dnsForwarder,
     azurerm_subnet_route_table_association.aks-1,
     # explict dependency on the firewall rules ensures they're in place before deploying private cluster
     azurerm_firewall_application_rule_collection.aks,
@@ -28,7 +26,7 @@ module "aks-1" {
     azurerm_private_dns_zone.acr.id
   ]
 
-  cluster_name = "azureml"
+  cluster_name = "${local.prefix}azureml${local.suffix}"
   aks_settings = {
     kubernetes_version      = null
     private_cluster_enabled = true

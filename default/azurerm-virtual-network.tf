@@ -39,9 +39,7 @@ resource "azurerm_subnet" "acr" {
   name                 = "AcrSubnet"
   resource_group_name  = azurerm_resource_group.default.name
   virtual_network_name = azurerm_virtual_network.default.name
-  # service_endpoints     = ["Microsoft.ContainerRegistry"]
-  # enforce_private_link_service_network_policies  = false
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled = true
   address_prefixes                               = ["10.255.0.160/27"]
 }
 
@@ -67,7 +65,7 @@ resource "azurerm_subnet" "aks-1-cluster" {
   name                                           = "Aks1ClusterSubnet"
   resource_group_name                            = azurerm_resource_group.default.name
   virtual_network_name                           = azurerm_virtual_network.aks-1-vnet.name
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled = true
   address_prefixes                               = ["10.220.0.0/22"]
 }
 
@@ -75,7 +73,7 @@ resource "azurerm_subnet" "aks-1-ingress" {
   name                                           = "Aks1IngressSubnet"
   resource_group_name                            = azurerm_resource_group.default.name
   virtual_network_name                           = azurerm_virtual_network.aks-1-vnet.name
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled = true
   address_prefixes                               = ["10.220.4.0/22"]
 }
 

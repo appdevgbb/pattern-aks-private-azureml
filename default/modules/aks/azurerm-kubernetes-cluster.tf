@@ -26,7 +26,9 @@ resource "azurerm_kubernetes_cluster" "dev" {
 
   identity {
     type = var.aks_settings.identity
-    user_assigned_identity_id = data.azurerm_user_assigned_identity.managed-id.id
+    identity_ids = [
+      data.azurerm_user_assigned_identity.managed-id.id
+    ] 
   }
 
   linux_profile {
@@ -46,17 +48,11 @@ resource "azurerm_kubernetes_cluster" "dev" {
     docker_bridge_cidr = var.aks_settings.docker_bridge_cidr
     outbound_type      = var.aks_settings.private_cluster_enabled == true ? "userDefinedRouting" : "loadBalancer"
   }
-
-  addon_profile {
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = var.log_analytics_workspace_id
-    }
-    kube_dashboard {
-      enabled = false
-    }
+  
+  oms_agent {
+    log_analytics_workspace_id = var.log_analytics_workspace_id
   }
-
+  
   # role_based_access_control {
   #   enabled = true
 
