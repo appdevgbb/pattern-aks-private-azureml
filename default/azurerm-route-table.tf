@@ -17,10 +17,10 @@ resource "azurerm_route" "default" {
   next_hop_in_ip_address = module.firewall.ip_address
 }
 
-resource "azurerm_subnet_route_table_association" "jumpbox" {
-  subnet_id      = azurerm_subnet.jumpbox.id
-  route_table_id = azurerm_route_table.default.id
-}
+# resource "azurerm_subnet_route_table_association" "jumpbox" {
+#   subnet_id      = azurerm_subnet.jumpbox.id
+#   route_table_id = azurerm_route_table.default.id
+# }
 
 resource "azurerm_subnet_route_table_association" "dnsForwarder" {
   subnet_id      = azurerm_subnet.dnsForwarder.id
