@@ -30,7 +30,7 @@ variable "instances" {
 
 variable "admin_username" {
   type    = string
-  default = "dcasati"
+  default = "gbbadmin"
 }
 
 variable "caching" {

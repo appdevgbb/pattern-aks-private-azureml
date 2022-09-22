@@ -17,6 +17,8 @@ module "aks-1" {
   prefix = local.prefix
   suffix = local.suffix
 
+  admin_username = var.admin_username
+
   subnet_id                  = azurerm_subnet.aks-1-cluster.id
   acr_subnet_id              = azurerm_subnet.acr.id
   resource_group             = azurerm_resource_group.default
@@ -41,7 +43,7 @@ module "aks-1" {
     service_cidr            = "10.174.128.0/17"
     dns_service_ip          = "10.174.128.10"
     docker_bridge_cidr      = "172.17.0.1/16"
-    admin_username          = "dcasati"
+    admin_username          = var.admin_username
     ssh_key                 = "~/.ssh/id_rsa.pub"
   }
 

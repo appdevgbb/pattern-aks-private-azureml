@@ -10,12 +10,12 @@ variable "location" {
   default     = "westus3"
 }
 
-variable "vpn_sku" {
-  type    = string
-  default = "VpnGw1AZ"
-}
-
-variable "domain" {
+variable "custom_domain" {
   type    = string
   default = "azuregbb.com"
+}
+
+variable "admin_username" {
+  type = string
+  default = "gbbadmin"
 }

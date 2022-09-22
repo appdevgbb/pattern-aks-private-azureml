@@ -1,0 +1,4 @@
+prefix = "gbb"
+location = "westus3"
+custom_domain = "azuregbb.com"
+admin_username = "gbbadmin"

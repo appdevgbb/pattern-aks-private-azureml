@@ -30,5 +30,5 @@ locals {
   workspace     = terraform.workspace
   suffix        = random_string.suffix.result
   cert_password = random_password.cert_password.result
-  zone_name     = "${var.location}.${var.domain}"
+  zone_name     = "${var.location}.${var.custom_domain}"
 }
