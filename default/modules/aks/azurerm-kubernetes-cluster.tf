@@ -52,6 +52,10 @@ resource "azurerm_kubernetes_cluster" "dev" {
   oms_agent {
     log_analytics_workspace_id = var.log_analytics_workspace_id
   }
+
+  private_dns_zone_id = var.private_dns_zone_id
+
+  sku_tier = "Paid"
   
   # role_based_access_control {
   #   enabled = true

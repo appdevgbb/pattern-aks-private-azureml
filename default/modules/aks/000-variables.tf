@@ -109,3 +109,7 @@ variable "user_node_pools" {
     }
   }
 }
+
+variable "private_dns_zone_id" {
+  type = string
+}

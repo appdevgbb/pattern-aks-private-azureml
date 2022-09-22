@@ -32,58 +32,58 @@ resource "azurerm_firewall_network_rule_collection" "jumpbox" {
   }
 }
 
-resource "azurerm_firewall_network_rule_collection" "dnsForwarder" {
-  name                = "dnsForwarderCollection"
-  azure_firewall_name = module.firewall.name
-  resource_group_name = module.firewall.resource_group.name
-  priority            = 200
-  action              = "Allow"
+# resource "azurerm_firewall_network_rule_collection" "dnsForwarder" {
+#   name                = "dnsForwarderCollection"
+#   azure_firewall_name = module.firewall.name
+#   resource_group_name = module.firewall.resource_group.name
+#   priority            = 200
+#   action              = "Allow"
 
-  rule {
-    name = "dnsForwarderRule"
+#   rule {
+#     name = "dnsForwarderRule"
 
-    source_addresses = azurerm_subnet.dnsForwarder.address_prefixes
+#     source_addresses = azurerm_subnet.dnsForwarder.address_prefixes
 
-    destination_ports = [
-      "53",
-    ]
+#     destination_ports = [
+#       "53",
+#     ]
 
-    destination_addresses = [
-      "*"
-    ]
+#     destination_addresses = [
+#       "*"
+#     ]
 
-    protocols = [
-      "TCP",
-      "UDP",
-    ]
-  }
-}
+#     protocols = [
+#       "TCP",
+#       "UDP",
+#     ]
+#   }
+# }
 
-resource "azurerm_firewall_network_rule_collection" "vpn" {
-  name                = "vpnForwarderCollection"
-  azure_firewall_name = module.firewall.name
-  resource_group_name = module.firewall.resource_group.name
-  priority            = 300
-  action              = "Allow"
+# resource "azurerm_firewall_network_rule_collection" "vpn" {
+#   name                = "vpnForwarderCollection"
+#   azure_firewall_name = module.firewall.name
+#   resource_group_name = module.firewall.resource_group.name
+#   priority            = 300
+#   action              = "Allow"
 
-  rule {
-    name = "vpnClientAllowRule"
+#   rule {
+#     name = "vpnClientAllowRule"
 
-    source_addresses = concat(["172.16.201.0/24"], azurerm_subnet.dnsForwarder.address_prefixes)
+#     source_addresses = concat(["172.16.201.0/24"], azurerm_subnet.dnsForwarder.address_prefixes)
 
-    destination_ports = [
-      "*",
-    ]
+#     destination_ports = [
+#       "*",
+#     ]
 
-    destination_addresses = [
-      "*"
-    ]
+#     destination_addresses = [
+#       "*"
+#     ]
 
-    protocols = [
-      "Any",
-    ]
-  }
-}
+#     protocols = [
+#       "Any",
+#     ]
+#   }
+# }
 
 resource "azurerm_firewall_application_rule_collection" "aks" {
   name                = "aksRequiredRules${local.suffix}"
@@ -336,6 +336,7 @@ resource "azurerm_firewall_application_rule_collection" "azureML" {
       "archive.ubuntu.com",
       "security.ubuntu.com",
       "ppa.launchpad.net",
+      "${var.location}.dp.kubernetesconfiguration.azure.com"
     ]
 
     protocol {

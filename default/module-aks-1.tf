@@ -26,6 +26,8 @@ module "aks-1" {
     azurerm_private_dns_zone.acr.id
   ]
 
+  private_dns_zone_id = azurerm_private_dns_zone.aksPrivateZone.id
+
   cluster_name = "${local.prefix}azureml${local.suffix}"
   aks_settings = {
     kubernetes_version      = null
