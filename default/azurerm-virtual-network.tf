@@ -18,7 +18,7 @@ resource "azurerm_subnet" "acr" {
   name                 = "AcrSubnet"
   resource_group_name  = azurerm_resource_group.default.name
   virtual_network_name = azurerm_virtual_network.default.name
-  private_endpoint_network_policies_enabled = true
+  private_endpoint_network_policies_enabled = false
   address_prefixes                               = ["10.255.0.160/27"]
 }
 
@@ -44,7 +44,7 @@ resource "azurerm_subnet" "aks-1-cluster" {
   name                                           = "Aks1ClusterSubnet"
   resource_group_name                            = azurerm_resource_group.default.name
   virtual_network_name                           = azurerm_virtual_network.aks-1-vnet.name
-  private_endpoint_network_policies_enabled = true
+  private_endpoint_network_policies_enabled = false
   address_prefixes                               = ["10.220.0.0/22"]
 }
 
@@ -55,6 +55,16 @@ resource "azurerm_subnet" "aks-1-ingress" {
   private_endpoint_network_policies_enabled = true
   address_prefixes                               = ["10.220.4.0/22"]
 }
+
+resource "azurerm_subnet" "aml" {
+  name                                           = "AmlSubnet"
+  resource_group_name                            = azurerm_resource_group.default.name
+  virtual_network_name                           = azurerm_virtual_network.aks-1-vnet.name
+  private_endpoint_network_policies_enabled      = false
+  address_prefixes                               = ["10.220.8.0/24"]
+}
+
+
 
 # peerings
 #

@@ -13,6 +13,7 @@ output "jumpbox" {
   value = {
     fqdn       = module.jumpbox.fqdn
     ip_address = module.jumpbox.public_ip_address
+    username = module.jumpbox.admin_username
   }
 }
 
