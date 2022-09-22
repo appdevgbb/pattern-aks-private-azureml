@@ -22,11 +22,6 @@ resource "azurerm_subnet_route_table_association" "jumpbox" {
   route_table_id = azurerm_route_table.default.id
 }
 
-resource "azurerm_subnet_route_table_association" "dnsForwarder" {
-  subnet_id      = azurerm_subnet.dnsForwarder.id
-  route_table_id = azurerm_route_table.default.id
-}
-
 # spokes
 #
 

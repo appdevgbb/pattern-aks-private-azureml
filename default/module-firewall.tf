@@ -234,12 +234,12 @@ resource "azurerm_firewall_application_rule_collection" "azureML" {
       "*.anaconda.com",
       "pypi.org",
       "cloud.r-project.org",
-      "*pytorch.org",
+      "*.pytorch.org",
       "*.tensorflow.org",
-      "*vscode.dev",
-      "*vscode-unpkg.net",
-      "*vscode-cdn.net",
-      "*vscodeexperiments.azureedge.net",
+      "*.vscode.dev",
+      "*.vscode-unpkg.net",
+      "*.vscode-cdn.net",
+      "*.vscodeexperiments.azureedge.net",
       "default.exp-tas.com",
       "code.visualstudio.com",
       "update.code.visualstudio.com",
@@ -256,7 +256,8 @@ resource "azurerm_firewall_application_rule_collection" "azureML" {
       "*.queue.core.windows.net",
       "*.blob.core.windows.net",
       "*.api.azureml.ms",
-      "*.experiments.azureml.net"
+      "*.experiments.azureml.net",
+      "viennaglobal.azurecr.io"
     ]
 
     protocol {
