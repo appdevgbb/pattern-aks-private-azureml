@@ -1,4 +1,4 @@
-output "resource_group" {
+output "resource_group_name" {
   value = azurerm_resource_group.default.name
 }
 
@@ -17,10 +17,15 @@ output "jumpbox" {
   }
 }
 
-# output "vpn_id" {
-#   value = module.vpn.gateway.id
-# }
+output "aks_cluster_name" {
+  value = module.aks-1.cluster_name
+}
 
-# output "client_cert_password" {
-#   value = local.cert_password
-# }
+output "aml_workspace_name" {
+  value = module.aml.workspace_name
+}
+
+
+output "subscription_id" {
+  value = data.azurerm_subscription.current.subscription_id
+}

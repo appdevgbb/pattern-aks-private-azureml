@@ -57,15 +57,13 @@ resource "azurerm_kubernetes_cluster" "dev" {
 
   sku_tier = "Paid"
   
-  # role_based_access_control {
-  #   enabled = true
-
-  #   azure_active_directory {
-  #     managed = true
-  #     tenant_id = local.tenant_id
-
-  #   }
-  # }
+  role_based_access_control_enabled = true
+  
+  azure_active_directory_role_based_access_control {
+    managed = true
+    azure_rbac_enabled = true
+    admin_group_object_ids = var.admin_group_object_ids
+  }
 
 }
 

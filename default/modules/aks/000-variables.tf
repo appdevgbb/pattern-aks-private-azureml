@@ -118,3 +118,10 @@ variable "admin_username" {
   type = string
   default = "gbbadmin"
 }
+
+variable "admin_group_object_ids" {
+  type = list
+  default = [
+    "16bf1612-f50b-4b85-9495-40517f8154e2"
+  ]
+}

@@ -45,10 +45,6 @@ resource "azurerm_network_interface_security_group_association" "jumpbox" {
   network_security_group_id = azurerm_network_security_group.jumpbox.id
 }
 
-# resource "azurerm_subnet_network_security_group_association" "example" {
-#   subnet_id                 = var.subnet_id
-#   network_security_group_id = azurerm_network_security_group.jumpbox.id
-# }
 
 resource "azurerm_linux_virtual_machine" "jumpbox" {
   name                = "${local.hostname}jumpbox${var.index}"
