@@ -50,7 +50,7 @@ resource "azurerm_machine_learning_workspace" "example" {
   container_registry_id   = azurerm_container_registry.example.id
   
   public_access_behind_virtual_network_enabled = true
-
+  # public_network_access_enabled = true
   identity {
     type = "SystemAssigned"
   }
@@ -87,21 +87,21 @@ resource "azurerm_private_endpoint" "acr" {
   }
 }
 
-resource "azurerm_private_endpoint" "aml" {
-  name                = "${local.prefix}-aml-endpoint-${local.suffix}"
-  location            = var.resource_group.location
-  resource_group_name = var.resource_group.name
-  subnet_id           = var.subnet_id
+# resource "azurerm_private_endpoint" "aml" {
+#   name                = "${local.prefix}-aml-endpoint-${local.suffix}"
+#   location            = var.resource_group.location
+#   resource_group_name = var.resource_group.name
+#   subnet_id           = var.subnet_id
 
-  private_service_connection {
-    name                           = "${local.prefix}-aml-connection-${local.suffix}"
-    private_connection_resource_id = azurerm_machine_learning_workspace.example.id
-    is_manual_connection           = false
-    subresource_names              = ["amlworkspace"]
-  }
+#   private_service_connection {
+#     name                           = "${local.prefix}-aml-connection-${local.suffix}"
+#     private_connection_resource_id = azurerm_machine_learning_workspace.example.id
+#     is_manual_connection           = false
+#     subresource_names              = ["amlworkspace"]
+#   }
 
-  private_dns_zone_group {
-    name                 = "aml-private-endpoint-group"
-    private_dns_zone_ids = var.aml_private_dns_zone_ids
-  }
-}
+#   private_dns_zone_group {
+#     name                 = "aml-private-endpoint-group"
+#     private_dns_zone_ids = var.aml_private_dns_zone_ids
+#   }
+# }
