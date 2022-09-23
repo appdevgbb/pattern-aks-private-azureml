@@ -68,7 +68,7 @@ azureml_attach() {
 
 azureml_show() {
   az k8s-extension show \
-    --name azureml \
+    --name aml-compute \
     --cluster-name "$AKS_CLUSTER_NAME" \
     --resource-group "$RGNAME" \
     --cluster-type managedClusters
