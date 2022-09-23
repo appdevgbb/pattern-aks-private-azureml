@@ -30,6 +30,15 @@ resource "azurerm_storage_account" "example" {
   account_replication_type = "GRS"
 }
 
+resource "azurerm_container_registry" "example" {
+  name                          = "${local.prefix}amlacr${local.suffix}"
+  resource_group_name           = var.resource_group.name
+  location                      = var.resource_group.location
+  sku                           = "Premium"
+  admin_enabled                 = false
+  public_network_access_enabled = false
+}
+
 resource "azurerm_machine_learning_workspace" "example" {
   name                    = "${local.prefix}workspace${local.suffix}"
   location                = var.resource_group.location
@@ -47,14 +56,17 @@ resource "azurerm_machine_learning_workspace" "example" {
   }
 }
 
-resource "azurerm_container_registry" "example" {
-  name                          = "${local.prefix}amlacr${local.suffix}"
-  resource_group_name           = var.resource_group.name
-  location                      = var.resource_group.location
-  sku                           = "Premium"
-  admin_enabled                 = false
-  public_network_access_enabled = false
-}
+# resource "azurerm_role_assignment" "mi-access-to-acr" {
+#   scope                = azurerm_container_registry.example.id
+#   role_definition_name = "Contributor"
+#   principal_id         = azurerm_machine_learning_workspace.example.identity[0].principal_id
+# }
+
+# resource "azurerm_role_assignment" "mi-access-to-akv" {
+#   scope                = azurerm_key_vault.example.id
+#   role_definition_name = "Contributor"
+#   principal_id         = azurerm_machine_learning_workspace.example.identity[0].principal_id
+# }
 
 resource "azurerm_private_endpoint" "acr" {
   name                = "${local.prefix}-acr-endpoint-${local.suffix}"
@@ -73,19 +85,6 @@ resource "azurerm_private_endpoint" "acr" {
     name                 = "acr-private-endpoint-group"
     private_dns_zone_ids = var.acr_private_dns_zone_ids
   }
-}
-
-
-resource "azurerm_role_assignment" "mi-access-to-acr" {
-  scope                = azurerm_container_registry.example.id
-  role_definition_name = "Contributor"
-  principal_id         = azurerm_machine_learning_workspace.example.identity[0].principal_id
-}
-
-resource "azurerm_role_assignment" "mi-access-to-akv" {
-  scope                = azurerm_key_vault.example.id
-  role_definition_name = "Contributor"
-  principal_id         = azurerm_machine_learning_workspace.example.identity[0].principal_id
 }
 
 resource "azurerm_private_endpoint" "aml" {
