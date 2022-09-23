@@ -24,7 +24,3 @@ variable "acr_private_dns_zone_ids" {
 variable "aml_private_dns_zone_ids" {
   type = list
 }
-
-variable "amlnotebook_private_dns_zone_ids" {
-  type = list
-}

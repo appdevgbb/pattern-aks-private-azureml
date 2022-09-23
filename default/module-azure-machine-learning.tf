@@ -14,10 +14,7 @@ module "aml" {
   ]
 
   aml_private_dns_zone_ids = [
-    azurerm_private_dns_zone.aml.id
-  ]
-
-  amlnotebook_private_dns_zone_ids = [
+    azurerm_private_dns_zone.aml.id,
     azurerm_private_dns_zone.amlnotebook.id
   ]
 }
