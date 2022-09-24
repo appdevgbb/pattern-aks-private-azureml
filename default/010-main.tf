@@ -14,6 +14,10 @@ provider "azurerm" {
 data "azurerm_subscription" "current" {
 }
 
+data "http" "myip" {
+  url = "https://api.ipify.org/"
+}
+
 resource "random_string" "suffix" {
   length  = 4
   special = false
