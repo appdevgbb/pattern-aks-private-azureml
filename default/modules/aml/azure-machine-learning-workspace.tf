@@ -49,7 +49,7 @@ resource "azurerm_machine_learning_workspace" "example" {
   storage_account_id      = azurerm_storage_account.example.id
   container_registry_id   = azurerm_container_registry.example.id
   
-  public_access_behind_virtual_network_enabled = true
+  public_access_behind_virtual_network_enabled = false
 
   identity {
     type = "SystemAssigned"
