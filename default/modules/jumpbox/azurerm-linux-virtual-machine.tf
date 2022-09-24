@@ -56,6 +56,10 @@ resource "azurerm_linux_virtual_machine" "jumpbox" {
     azurerm_network_interface.jumpbox.id,
   ]
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   admin_ssh_key {
     username   = var.admin_username
     public_key = file("~/.ssh/id_rsa.pub")
@@ -73,4 +77,10 @@ resource "azurerm_linux_virtual_machine" "jumpbox" {
     sku       = "18.04-LTS"
     version   = "latest"
   }
+}
+
+resource "azurerm_role_assignment" "jumpbox-contributor" {
+  scope                = var.resource_group.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_linux_virtual_machine.jumpbox.identity[0].principal_id
 }

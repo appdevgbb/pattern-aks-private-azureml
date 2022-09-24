@@ -84,3 +84,10 @@ resource "azurerm_virtual_machine_extension" "attestation" {
     }
 SETTINGS
 }
+
+
+resource "azurerm_role_assignment" "jumpbox-contributor" {
+  scope                = var.resource_group.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_windows_virtual_machine.example.identity[0].principal_id
+}
