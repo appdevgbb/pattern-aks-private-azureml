@@ -1,45 +1,47 @@
-module "jumpbox" {
+module "win11jumpbox" {
   depends_on = [
     module.firewall
   ]
 
-  source = "./modules/jumpbox"
+  source = "./modules/devtestwindows11"
 
   prefix = local.prefix
   suffix = local.suffix
 
+  sku = "Standard_F16s_v2"
+
   subnet_id      = azurerm_subnet.jumpbox.id
   resource_group = azurerm_resource_group.default
-  
+
   admin_username = var.admin_username
+  admin_password = local.admin_password
 }
 
-
-resource "azurerm_firewall_nat_rule_collection" "ssh" {
-  name                = "JumpboxSshNatRule"
+resource "azurerm_firewall_nat_rule_collection" "rdp" {
+  name                = "JumpboxSshRDPRule"
   azure_firewall_name = module.firewall.name
   resource_group_name = azurerm_resource_group.default.name
-  priority            = 200
+  priority            = 210
   action              = "Dnat"
 
   rule {
-    name = "JumpboxSSH"
+    name = "JumpboxRDP"
 
     source_addresses = [
       "*"
     ]
 
     destination_ports = [
-      "22",
+      "3389",
     ]
 
     destination_addresses = [
       module.firewall.public_ip_address
     ]
 
-    translated_port = 22
+    translated_port = 3389
 
-    translated_address = module.jumpbox.ip_address
+    translated_address = module.win11jumpbox.private_ip_address
 
     protocols = [
       "TCP"

@@ -29,3 +29,8 @@ output "aml_workspace_name" {
 output "subscription_id" {
   value = data.azurerm_subscription.current.subscription_id
 }
+
+output "win11password" {
+  value = module.win11jumpbox.admin_password
+  sensitive = true
+}

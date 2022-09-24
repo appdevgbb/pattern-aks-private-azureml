@@ -34,4 +34,5 @@ locals {
   suffix        = random_string.suffix.result
   cert_password = random_password.cert_password.result
   zone_name     = "${var.location}.${var.custom_domain}"
+  admin_password = var.admin_password != "" ? var.admin_password : random_password.cert_password.result
 }

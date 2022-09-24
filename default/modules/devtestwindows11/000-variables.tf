@@ -6,16 +6,11 @@ variable "suffix" {
   type = string
 }
 
-variable "index" {
-  type    = number
-  default = 1
+variable "resource_group" {
 }
 
 variable "subnet_id" {
   type = string
-}
-
-variable "resource_group" {
 }
 
 variable "sku" {
@@ -23,13 +18,13 @@ variable "sku" {
   default = "Standard_D4s_v3"
 }
 
-variable "instances" {
-  type    = number
-  default = 1
-}
-
 variable "admin_username" {
   type    = string
+  default = "gbbadmin"
+}
+
+variable "admin_password" {
+  type = string
 }
 
 variable "caching" {
@@ -44,10 +39,5 @@ variable "storage_account_type" {
 
 variable "disk_size_gb" {
   type    = string
-  default = "100"
-}
-
-variable "diff_disk_settings" {
-  type    = string
-  default = "Local"
+  default = "2048"
 }

@@ -19,3 +19,8 @@ variable "admin_username" {
   type = string
   default = "gbbadmin"
 }
+
+variable "admin_password" {
+  type = string
+  default = ""
+}

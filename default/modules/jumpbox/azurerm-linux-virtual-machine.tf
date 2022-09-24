@@ -62,12 +62,9 @@ resource "azurerm_linux_virtual_machine" "jumpbox" {
   }
 
   os_disk {
-    caching              = "ReadOnly"
+    caching              = var.caching
     storage_account_type = var.storage_account_type
     disk_size_gb         = var.disk_size_gb
-    diff_disk_settings {
-      option = var.diff_disk_settings
-    }
   }
 
   source_image_reference {
