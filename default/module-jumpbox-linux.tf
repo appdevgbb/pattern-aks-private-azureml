@@ -3,7 +3,7 @@ module "jumpbox" {
     module.firewall
   ]
 
-  source = "./modules/jumpbox"
+  source = "./modules/jumpbox-linux"
 
   prefix = local.prefix
   suffix = local.suffix

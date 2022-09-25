@@ -11,9 +11,11 @@ output "firewall" {
 
 output "jumpbox" {
   value = {
-    fqdn       = module.jumpbox.fqdn
-    ip_address = module.jumpbox.public_ip_address
-    username = module.jumpbox.admin_username
+    fqdn               = module.firewall.fqdn
+    public_ip_address = module.firewall.public_ip_address
+    private_ip_address = module.jumpbox.ip_address
+    username           = module.jumpbox.admin_username
+    ssh = "${module.jumpbox.admin_username}@${module.firewall.fqdn}"
   }
 }
 
@@ -30,7 +32,12 @@ output "subscription_id" {
   value = data.azurerm_subscription.current.subscription_id
 }
 
-output "win11password" {
-  value = module.win11jumpbox.admin_password
+output "windows-jumpbox" {
+  value = {
+    fqdn        = module.firewall.fqdn
+    public_ip_address  = module.firewall.public_ip_address
+    private_ip_address = module.win11jumpbox.private_ip_address
+    password    = module.win11jumpbox.admin_password    
+  }
   sensitive = true
 }

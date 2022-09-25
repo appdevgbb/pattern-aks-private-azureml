@@ -3,7 +3,7 @@ module "win11jumpbox" {
     module.firewall
   ]
 
-  source = "./modules/devtestwindows11"
+  source = "./modules/jumpbox-windows"
 
   prefix = local.prefix
   suffix = local.suffix

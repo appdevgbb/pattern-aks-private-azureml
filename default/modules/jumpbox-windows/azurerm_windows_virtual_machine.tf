@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "example" {
-  name                = "${local.prefix}-win11-nic-${local.suffix}"
+  name                = "${local.hostname}-nic"
   location            = var.resource_group.location
   resource_group_name = var.resource_group.name
 
@@ -11,7 +11,7 @@ resource "azurerm_network_interface" "example" {
 }
 
 resource "azurerm_windows_virtual_machine" "example" {
-  name                = "example-machine"
+  name                = local.hostname
   resource_group_name = var.resource_group.name
   location            = var.resource_group.location
   size                = var.sku
@@ -20,6 +20,8 @@ resource "azurerm_windows_virtual_machine" "example" {
   network_interface_ids = [
     azurerm_network_interface.example.id,
   ]
+  
+  vtpm_enabled = true
 
   allow_extension_operations = true
 
@@ -34,7 +36,7 @@ resource "azurerm_windows_virtual_machine" "example" {
   source_image_reference {
     offer     = "windows-11"
     publisher = "microsoftwindowsdesktop"
-    sku       = "win11-21h2-pro"
+    sku       = "win11-22h2-pro"
     version   = "latest"
   }
 
@@ -54,37 +56,16 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
   settings = <<SETTINGS
     {
-        "mdmId": ""
+        "mdmId": "",
     }
 SETTINGS
 }
 
-resource "azurerm_virtual_machine_extension" "attestation" {
-  name                 = "GuestAttestation"
-  virtual_machine_id   = azurerm_windows_virtual_machine.example.id
-  publisher            = "Microsoft.Azure.Security.WindowsAttestation"
-  type                 = "GuestAttestation"
-  type_handler_version = "1.0"
-  auto_upgrade_minor_version = true
-
-  settings = <<SETTINGS
-    {
-      "AttestationConfig": {
-        "MaaSettings": {
-          "maaEndpoint": "",
-          "maaTenantName": "GuestAttestation"
-        },
-        "AscSettings": {
-          "ascReportingEndpoint": "",
-          "ascReportingFrequency": ""
-        },
-        "useCustomToken": "false",
-        "disableAlerts": "false"
-      }
-    }
-SETTINGS
+resource "azurerm_role_assignment" "vmAdminLogin" {
+  scope = azurerm_windows_virtual_machine.example.id
+  role_definition_name = "Virtual Machine Administrator Login"
+  principal_id = local.current_user
 }
-
 
 resource "azurerm_role_assignment" "jumpbox-contributor" {
   scope                = var.resource_group.id

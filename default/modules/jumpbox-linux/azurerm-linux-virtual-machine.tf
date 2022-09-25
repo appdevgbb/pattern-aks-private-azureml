@@ -1,12 +1,3 @@
-resource "azurerm_public_ip" "jumpbox" {
-  name                = "${local.hostname}-jumpbox${var.index}-pip"
-  resource_group_name = var.resource_group.name
-  location            = var.resource_group.location
-  allocation_method   = "Static"
-  sku                 = "Standard"
-  domain_name_label   = "${local.hostname}-jumpbox${var.index}"
-}
-
 resource "azurerm_network_interface" "jumpbox" {
   name                = "${local.hostname}-jumpbox-nic-${var.index}"
   location            = var.resource_group.location
@@ -18,7 +9,6 @@ resource "azurerm_network_interface" "jumpbox" {
     name                          = "primary"
     subnet_id                     = var.subnet_id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.jumpbox.id
   }
 }
 
