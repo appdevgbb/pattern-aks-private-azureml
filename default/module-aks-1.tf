@@ -22,7 +22,6 @@ module "aks-1" {
   subnet_id                  = azurerm_subnet.aks-1-cluster.id
   acr_subnet_id              = azurerm_subnet.acr.id
   resource_group             = azurerm_resource_group.default
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.aks.id
 
   acr_private_dns_zone_ids = [
     azurerm_private_dns_zone.acr.id

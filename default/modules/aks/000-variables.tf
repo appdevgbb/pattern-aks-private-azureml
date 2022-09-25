@@ -31,10 +31,6 @@ variable "acr_private_dns_zone_ids" {
 variable "resource_group" {
 }
 
-variable "log_analytics_workspace_id" {
-  type = string
-}
-
 variable "aks_settings" {
   type = object({
     kubernetes_version      = string

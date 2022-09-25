@@ -50,7 +50,7 @@ resource "azurerm_kubernetes_cluster" "dev" {
   }
   
   oms_agent {
-    log_analytics_workspace_id = var.log_analytics_workspace_id
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.aks.id
   }
 
   private_dns_zone_id = var.private_dns_zone_id
