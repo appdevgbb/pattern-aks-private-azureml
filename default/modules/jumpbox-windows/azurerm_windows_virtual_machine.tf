@@ -56,7 +56,7 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
   settings = <<SETTINGS
     {
-        "mdmId": "",
+        "mdmId": ""
     }
 SETTINGS
 }
