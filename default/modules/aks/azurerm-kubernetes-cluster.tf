@@ -55,6 +55,7 @@ resource "azurerm_kubernetes_cluster" "dev" {
 
   private_dns_zone_id = var.private_dns_zone_id
 
+  # For certain services/features; requires more API request limits to CP/ARM
   sku_tier = "Paid"
   
   role_based_access_control_enabled = true
@@ -63,6 +64,13 @@ resource "azurerm_kubernetes_cluster" "dev" {
     managed = true
     azure_rbac_enabled = true
     admin_group_object_ids = var.admin_group_object_ids
+  }
+
+  lifecycle {
+    ignore_changes = [
+      # Incase the cluster is upgraded via an out-of-band process (i.e. Portal or AzCLI)
+      kubernetes_version
+    ]
   }
 
 }
