@@ -14,7 +14,6 @@ module "win11jumpbox" {
   resource_group = azurerm_resource_group.default
 
   admin_username = var.admin_username
-  admin_password = local.admin_password
 }
 
 resource "azurerm_firewall_nat_rule_collection" "rdp" {

@@ -16,7 +16,7 @@ resource "azurerm_windows_virtual_machine" "example" {
   location            = var.resource_group.location
   size                = var.sku
   admin_username      = var.admin_username
-  admin_password      = var.admin_password
+  admin_password      = local.admin_password
   network_interface_ids = [
     azurerm_network_interface.example.id,
   ]
@@ -54,11 +54,14 @@ resource "azurerm_virtual_machine_extension" "aad" {
   type                 = "AADLoginForWindows"
   type_handler_version = "1.0"
 
-  settings = <<SETTINGS
-    {
-        "mdmId": ""
-    }
-SETTINGS
+  settings = jsonencode({
+    mdmId = ""
+  })
+#   settings = <<SETTINGS
+#     {
+#         "mdmId": ""
+#     }
+# SETTINGS
 }
 
 resource "azurerm_role_assignment" "vmAdminLogin" {
