@@ -24,3 +24,8 @@ variable "admin_password" {
   type = string
   default = ""
 }
+
+variable "aks_admin_group_object_ids" {
+  type = list
+  default = []
+}

@@ -115,9 +115,10 @@ variable "admin_username" {
   default = "gbbadmin"
 }
 
-variable "admin_group_object_ids" {
+variable "aks_admin_group_object_ids" {
   type = list
-  default = [
-    "16bf1612-f50b-4b85-9495-40517f8154e2"
-  ]
+  default = []
+}
+
+variable "user_assigned_identity" {
 }

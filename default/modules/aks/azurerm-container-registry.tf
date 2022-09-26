@@ -39,7 +39,7 @@ resource "azurerm_private_endpoint" "acr" {
 resource "azurerm_role_assignment" "mi-access-to-acr" {
   scope                = azurerm_container_registry.default.id
   role_definition_name = "AcrPull"
-  principal_id         = data.azurerm_user_assigned_identity.managed-id.principal_id
+  principal_id         = var.user_assigned_identity.principal_id
 }
 
 

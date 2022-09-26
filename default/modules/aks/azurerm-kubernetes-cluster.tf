@@ -1,7 +1,7 @@
-data "azurerm_user_assigned_identity" "managed-id" {
-  name                = "aks-user-assigned-managed-id"
-  resource_group_name = var.resource_group.name
-}
+# data "azurerm_user_assigned_identity" "managed-id" {
+#   name                = "aks-user-assigned-managed-id"
+#   resource_group_name = var.resource_group.name
+# }
 
 resource "azurerm_kubernetes_cluster" "dev" {
   name                = var.cluster_name == true ? var.cluster_name : local.cluster_name
@@ -27,7 +27,7 @@ resource "azurerm_kubernetes_cluster" "dev" {
   identity {
     type = var.aks_settings.identity
     identity_ids = [
-      data.azurerm_user_assigned_identity.managed-id.id
+      var.user_assigned_identity.id
     ] 
   }
 
@@ -63,7 +63,7 @@ resource "azurerm_kubernetes_cluster" "dev" {
   azure_active_directory_role_based_access_control {
     managed = true
     azure_rbac_enabled = true
-    admin_group_object_ids = var.admin_group_object_ids
+    admin_group_object_ids = var.aks_admin_group_object_ids
   }
 
   lifecycle {

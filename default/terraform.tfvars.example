@@ -2,3 +2,4 @@ prefix = "gbb"
 location = "westus3"
 custom_domain = "azuregbb.com"
 admin_username = "gbbadmin"
+aks_admin_group_object_ids = ["azure-ad-group-guid"]

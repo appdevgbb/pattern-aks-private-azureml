@@ -56,6 +56,10 @@ module "aks-1" {
   prefix = local.prefix
   suffix = local.suffix
 
+  user_assigned_identity = azurerm_user_assigned_identity.managed-id
+
+  aks_admin_group_object_ids = var.aks_admin_group_object_ids
+
   admin_username = var.admin_username
 
   subnet_id                  = azurerm_subnet.aks-1-cluster.id
