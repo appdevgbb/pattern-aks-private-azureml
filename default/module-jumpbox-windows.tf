@@ -8,7 +8,7 @@ module "win11jumpbox" {
   prefix = local.prefix
   suffix = local.suffix
 
-  sku = "Standard_F16s_v2"
+  sku = "Standard_D4s_v3"
 
   subnet_id      = azurerm_subnet.jumpbox.id
   resource_group = azurerm_resource_group.default
