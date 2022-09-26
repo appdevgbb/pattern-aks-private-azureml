@@ -21,7 +21,7 @@ resource "azurerm_windows_virtual_machine" "example" {
     azurerm_network_interface.example.id,
   ]
   
-  vtpm_enabled = true
+  vtpm_enabled = false
 
   allow_extension_operations = true
 
