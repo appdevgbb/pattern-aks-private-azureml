@@ -1,9 +1,7 @@
 # Pattern - Using Azure ML on AKS
-
-![logo](assets/logo.png =250x250)
-
-
 This is a demo repo to deploy Azure ML on Azure Kubernetes Service cluster.
+
+<p align="center"><img src="https://github.com/appdevgbb/pattern-aks-private-azureml/blob/main/assets/logo.png" width="250" height="250"></p>
 
 ### Steps to run this demo
 
