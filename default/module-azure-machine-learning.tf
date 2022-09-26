@@ -17,4 +17,16 @@ module "aml" {
     azurerm_private_dns_zone.aml.id,
     azurerm_private_dns_zone.amlnotebook.id
   ]
+
+  akv_private_dns_zone_ids = [
+    azurerm_private_dns_zone.akv.id
+  ]
+
+  storageblob_private_dns_zone_ids = [
+    azurerm_private_dns_zone.storageblob.id
+  ]
+
+  storagefile_private_dns_zone_ids = [
+    azurerm_private_dns_zone.storagefile.id
+  ]
 }
