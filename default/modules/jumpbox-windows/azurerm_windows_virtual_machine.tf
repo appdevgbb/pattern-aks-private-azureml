@@ -57,11 +57,6 @@ resource "azurerm_virtual_machine_extension" "aad" {
   settings = jsonencode({
     mdmId = ""
   })
-#   settings = <<SETTINGS
-#     {
-#         "mdmId": ""
-#     }
-# SETTINGS
 }
 
 resource "azurerm_role_assignment" "vmAdminLogin" {
