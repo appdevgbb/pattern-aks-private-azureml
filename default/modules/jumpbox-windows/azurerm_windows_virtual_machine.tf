@@ -47,23 +47,25 @@ resource "azurerm_windows_virtual_machine" "example" {
   license_type = "Windows_Client"
 }
 
-resource "azurerm_virtual_machine_extension" "aad" {
-  name                 = "AADLoginForWindows"
-  virtual_machine_id   = azurerm_windows_virtual_machine.example.id
-  publisher            = "Microsoft.Azure.ActiveDirectory"
-  type                 = "AADLoginForWindows"
-  type_handler_version = "1.0"
 
-  settings = jsonencode({
-    mdmId = ""
-  })
-}
+## AAD login seesm broke at the moment with MSFT AAD
+# resource "azurerm_virtual_machine_extension" "aad" {
+#   name                 = "AADLoginForWindows"
+#   virtual_machine_id   = azurerm_windows_virtual_machine.example.id
+#   publisher            = "Microsoft.Azure.ActiveDirectory"
+#   type                 = "AADLoginForWindows"
+#   type_handler_version = "1.0"
 
-resource "azurerm_role_assignment" "vmAdminLogin" {
-  scope = azurerm_windows_virtual_machine.example.id
-  role_definition_name = "Virtual Machine Administrator Login"
-  principal_id = local.current_user
-}
+#   settings = jsonencode({
+#     mdmId = ""
+#   })
+# }
+
+# resource "azurerm_role_assignment" "vmAdminLogin" {
+#   scope = azurerm_windows_virtual_machine.example.id
+#   role_definition_name = "Virtual Machine Administrator Login"
+#   principal_id = local.current_user
+# }
 
 resource "azurerm_role_assignment" "jumpbox-contributor" {
   scope                = var.resource_group.id
