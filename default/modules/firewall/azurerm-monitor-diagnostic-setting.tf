@@ -74,7 +74,7 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
   }
 
   log {
-    category = "AZNatRule"
+    category = "AZFWNatRule"
     enabled = false
     retention_policy {
       days = 0
