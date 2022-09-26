@@ -1,5 +1,8 @@
 # Pattern - Using Azure ML on AKS
 
+![logo](assets/logo.png)
+
+
 This is a demo repo to deploy Azure ML on Azure Kubernetes Service cluster.
 
 ### Steps to run this demo
