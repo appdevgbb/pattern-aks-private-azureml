@@ -13,6 +13,21 @@ resource "azurerm_role_assignment" "aks-mi-roles" {
 
 # cluster-1
 #
+
+# NFS
+resource "azurerm_role_assignment" "aks-mi-roles-nfs-storage" {
+  scope                = azurerm_private_dns_zone.nfs_storagefile.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_user_assigned_identity.managed-id.principal_id
+}
+
+resource "azurerm_role_assignment" "aks-mi-roles-vnet-rg" {
+  scope                = azurerm_resource_group.default.id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_user_assigned_identity.managed-id.principal_id
+}
+
+# Network
 resource "azurerm_role_assignment" "aks-mi-roles-aks-1" {
   scope                = azurerm_virtual_network.aks-1-vnet.id
   role_definition_name = "Network Contributor"
@@ -31,6 +46,7 @@ resource "azurerm_role_assignment" "aks-mi-roles-aks-1-rt" {
   principal_id         = azurerm_user_assigned_identity.managed-id.principal_id
 }
 
+# DNS
 resource "azurerm_role_assignment" "aks-mi-roles-aks-1-dns-zone" {
   scope = azurerm_private_dns_zone.aksPrivateZone.id
   role_definition_name = "Private DNS Zone Contributor"
@@ -58,7 +74,7 @@ module "aks-1" {
 
   user_assigned_identity = azurerm_user_assigned_identity.managed-id
 
-  aks_admin_group_object_ids = var.aks_admin_group_object_ids
+  # aks_admin_group_object_ids = var.aks_admin_group_object_ids
 
   admin_username = var.admin_username
 
@@ -68,6 +84,10 @@ module "aks-1" {
 
   acr_private_dns_zone_ids = [
     azurerm_private_dns_zone.acr.id
+  ]
+
+  storagefile_private_dns_zone_ids = [
+    azurerm_private_dns_zone.nfs_storagefile.id
   ]
 
   private_dns_zone_id = azurerm_private_dns_zone.aksPrivateZone.id

@@ -10,6 +10,7 @@ set -e
 # - terraform
 
 source aml-extension-deploy.sh
+source azure-files-nfs.sh
 
 __usage="
 Available Commands:
@@ -53,7 +54,8 @@ checkDependencies() {
 }
 
 do_demo_bootstrap() {
-  demo_entrypoint
+  aml_demo_entrypoint
+  nfs_demo_entrypoint
 }
 
 terraformDance() {
@@ -80,7 +82,7 @@ destroy() {
 
 run() {
   terraformDance
-  demo_entrypoint
+  do_demo_bootstrap
 }
 
 exec_case() {

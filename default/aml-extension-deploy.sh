@@ -30,8 +30,7 @@ azureml_setup() {
     --cluster-type managedClusters \
     --cluster-name "$AKS_CLUSTER_NAME" \
     --resource-group "$RGNAME" \
-    --scope cluster \
-    --debug
+    --scope cluster
 
   ## For prod training and inference:
   #
@@ -62,9 +61,8 @@ azureml_attach() {
     --name k8s-compute \
     --resource-id "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RGNAME/providers/Microsoft.ContainerService/managedclusters/$AKS_CLUSTER_NAME" \
     --identity-type SystemAssigned \
-    --namespace $AML_K8S_NAMESPACE \
-    --debug
-}
+    --namespace $AML_K8S_NAMESPACE
+  }
 
 azureml_show() {
   az k8s-extension show \
@@ -74,7 +72,7 @@ azureml_show() {
     --cluster-type managedClusters
 }
 
-demo_entrypoint() {
+aml_demo_entrypoint() {
   load_env
   azureml_providers
   azureml_setup

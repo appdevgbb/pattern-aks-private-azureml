@@ -123,6 +123,11 @@ resource "azurerm_private_dns_zone" "storagefile" {
   resource_group_name = azurerm_resource_group.default.name
 }
 
+resource "azurerm_private_dns_zone" "nfs_storagefile" {
+  name                = "nfs-privatelink.file.core.windows.net"
+  resource_group_name = azurerm_resource_group.default.name
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "vnetlinkfile" {
   name                  = "dnsfilestoragelink"
   resource_group_name   = azurerm_resource_group.default.name

@@ -5,3 +5,7 @@ output "acr" {
 output "cluster_name" {
   value = azurerm_kubernetes_cluster.dev.name
 }
+
+output "nfs_storage_account_name" {
+  value = azurerm_storage_account.nfs.name
+}

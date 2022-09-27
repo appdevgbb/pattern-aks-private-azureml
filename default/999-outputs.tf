@@ -27,6 +27,9 @@ output "aml_workspace_name" {
   value = module.aml.workspace_name
 }
 
+output "nfs_storage_account_name" {
+  value = module.aks-1.nfs_storage_account_name
+}
 
 output "subscription_id" {
   value = data.azurerm_subscription.current.subscription_id
